@@ -1,0 +1,14 @@
+{
+  "id": "kenney-micro-roguelike",
+  "name": "Micro Roguelike",
+  "source": "https://kenney.nl/assets/micro-roguelike",
+  "license": "CC0-1.0",
+  "style": "uncurated",
+  "tags": [
+    "2d"
+  ],
+  "types": [
+    "sprites"
+  ],
+  "importedAt": "2026-07-02"
+}

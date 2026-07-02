@@ -1,0 +1,16 @@
+{
+  "id": "kenney-ui-pack",
+  "name": "UI Pack",
+  "source": "https://kenney.nl/assets/ui-pack",
+  "license": "CC0-1.0",
+  "style": "uncurated",
+  "tags": [
+    "2d"
+  ],
+  "types": [
+    "audio",
+    "fonts",
+    "sprites"
+  ],
+  "importedAt": "2026-07-02"
+}

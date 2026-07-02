@@ -1,0 +1,15 @@
+{
+  "id": "kenney-marble-kit",
+  "name": "Marble Kit",
+  "source": "https://kenney.nl/assets/marble-kit",
+  "license": "CC0-1.0",
+  "style": "uncurated",
+  "tags": [
+    "3d"
+  ],
+  "types": [
+    "models",
+    "sprites"
+  ],
+  "importedAt": "2026-07-02"
+}

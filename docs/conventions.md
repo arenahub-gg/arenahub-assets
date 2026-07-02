@@ -41,9 +41,15 @@ Every pack dir in `assets/` must contain:
 ```
 
 - `license` + `source` mandatory — no pack without provenance. Keep the pack's upstream license file.
-- `style` mandatory — one style per game; enables future brand curation.
+- `style` mandatory — one style per game; enables future brand curation. Bulk-imported packs start as `"uncurated"`; set a real style value the first time a game uses the pack.
 - Preserve original pack file structure and filenames (they ARE the search index).
 - After adding/removing packs run `npm run catalog`.
+
+## Bulk import & git policy
+
+- Binary payloads under `assets/*/` are gitignored; only `pack.json` (and the manifest) are committed. Rebuild payloads with `npm run assets:download` (scrapes current zip URLs from kenney.nl per `assets/packs-manifest.json`; safe to re-run, existing packs are skipped).
+- The two R1 packs (`kenney-puzzle-pack-2`, `kenney-digital-audio`) predate this policy and stay fully tracked in git — games vendor from them.
+- To add a new pack: append `{slug, category}` to `assets/packs-manifest.json`, run `npm run assets:download`, curate `pack.json`, run `npm run catalog`.
 
 ## Extraction procedure (how the library grows)
 

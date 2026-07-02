@@ -1,0 +1,15 @@
+{
+  "id": "kenney-coaster-kit",
+  "name": "Coaster Kit",
+  "source": "https://kenney.nl/assets/coaster-kit",
+  "license": "CC0-1.0",
+  "style": "uncurated",
+  "tags": [
+    "3d"
+  ],
+  "types": [
+    "models",
+    "sprites"
+  ],
+  "importedAt": "2026-07-02"
+}

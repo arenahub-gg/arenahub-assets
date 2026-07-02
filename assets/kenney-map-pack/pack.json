@@ -1,0 +1,14 @@
+{
+  "id": "kenney-map-pack",
+  "name": "Map Pack",
+  "source": "https://kenney.nl/assets/map-pack",
+  "license": "CC0-1.0",
+  "style": "uncurated",
+  "tags": [
+    "2d"
+  ],
+  "types": [
+    "sprites"
+  ],
+  "importedAt": "2026-07-02"
+}

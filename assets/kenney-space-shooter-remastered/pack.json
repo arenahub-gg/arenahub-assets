@@ -1,0 +1,16 @@
+{
+  "id": "kenney-space-shooter-remastered",
+  "name": "Space Shooter Remastered",
+  "source": "https://kenney.nl/assets/space-shooter-remastered",
+  "license": "CC0-1.0",
+  "style": "uncurated",
+  "tags": [
+    "2d"
+  ],
+  "types": [
+    "audio",
+    "fonts",
+    "sprites"
+  ],
+  "importedAt": "2026-07-02"
+}

@@ -1,0 +1,15 @@
+{
+  "id": "kenney-ui-pack-sci-fi",
+  "name": "UI Pack - Sci-Fi",
+  "source": "https://kenney.nl/assets/ui-pack-sci-fi",
+  "license": "CC0-1.0",
+  "style": "uncurated",
+  "tags": [
+    "2d"
+  ],
+  "types": [
+    "fonts",
+    "sprites"
+  ],
+  "importedAt": "2026-07-02"
+}

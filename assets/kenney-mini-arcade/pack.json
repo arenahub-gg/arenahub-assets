@@ -1,0 +1,15 @@
+{
+  "id": "kenney-mini-arcade",
+  "name": "Mini Arcade",
+  "source": "https://kenney.nl/assets/mini-arcade",
+  "license": "CC0-1.0",
+  "style": "uncurated",
+  "tags": [
+    "3d"
+  ],
+  "types": [
+    "models",
+    "sprites"
+  ],
+  "importedAt": "2026-07-02"
+}

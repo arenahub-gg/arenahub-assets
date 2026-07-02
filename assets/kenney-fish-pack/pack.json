@@ -1,0 +1,14 @@
+{
+  "id": "kenney-fish-pack",
+  "name": "Fish Pack",
+  "source": "https://kenney.nl/assets/fish-pack",
+  "license": "CC0-1.0",
+  "style": "uncurated",
+  "tags": [
+    "2d"
+  ],
+  "types": [
+    "sprites"
+  ],
+  "importedAt": "2026-07-02"
+}

@@ -15,7 +15,7 @@ Knowledge/asset library powering AI-assembled games for arenahub.gg. You (Claude
 | Path | What lives here |
 |---|---|
 | `catalog/` | Generated markdown catalogs — START HERE to find anything. Regenerate: `npm run catalog` |
-| `assets/` | CC0 binary packs (`kenney-*/`), each with `pack.json` metadata |
+| `assets/` | CC0 binary packs (`kenney-*/`), each with `pack.json` metadata. Binary payloads are gitignored — on a fresh clone run `npm install && npm run assets:download` (manifest: `assets/packs-manifest.json`, ~207 Kenney packs) |
 | `engine/` | Canonical core TS modules: game loop, input, renderer, asset loader, audio |
 | `components/` | Canonical reusable UI/systems: HUD, overlays, ... |
 | `sdk/` | `ArenaHubSDK` interface + localStorage stub. Import from `sdk/index.ts` |

@@ -1,0 +1,15 @@
+{
+  "id": "kenney-new-platformer-pack",
+  "name": "New Platformer Pack",
+  "source": "https://kenney.nl/assets/new-platformer-pack",
+  "license": "CC0-1.0",
+  "style": "uncurated",
+  "tags": [
+    "2d"
+  ],
+  "types": [
+    "audio",
+    "sprites"
+  ],
+  "importedAt": "2026-07-02"
+}

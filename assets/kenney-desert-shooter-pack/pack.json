@@ -1,0 +1,15 @@
+{
+  "id": "kenney-desert-shooter-pack",
+  "name": "Desert Shooter Pack",
+  "source": "https://kenney.nl/assets/desert-shooter-pack",
+  "license": "CC0-1.0",
+  "style": "uncurated",
+  "tags": [
+    "2d"
+  ],
+  "types": [
+    "audio",
+    "sprites"
+  ],
+  "importedAt": "2026-07-02"
+}

@@ -1,0 +1,14 @@
+{
+  "id": "kenney-platformer-bricks",
+  "name": "Platformer Bricks",
+  "source": "https://kenney.nl/assets/platformer-bricks",
+  "license": "CC0-1.0",
+  "style": "uncurated",
+  "tags": [
+    "2d"
+  ],
+  "types": [
+    "sprites"
+  ],
+  "importedAt": "2026-07-02"
+}
