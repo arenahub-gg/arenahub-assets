@@ -5,3 +5,4 @@ Complete games in `games/`. Each is self-contained (vendored engine + assets).
 | Game | Type | Input | Assets | Status |
 |---|---|---|---|---|
 | games/snake/ | real-time grid, single-player | keyboard (arrows/WASD) + touch swipe | kenney-puzzle-pack-2 sprites, kenney-digital-audio SFX | complete — reference implementation |
+| games/breakout/ | physics/paddle, single-player | keyboard (arrows/A-D) + touch swipe | kenney-puzzle-pack-2 sprites, kenney-digital-audio SFX | complete — generated from library recipe by fresh session (acceptance test R1) |
