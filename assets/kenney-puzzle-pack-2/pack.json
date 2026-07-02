@@ -1,0 +1,11 @@
+{
+  "id": "kenney-puzzle-pack-2",
+  "name": "Puzzle Pack 2",
+  "source": "https://kenney.nl/assets/puzzle-pack-2",
+  "license": "CC0-1.0",
+  "style": "flat-vector-64px",
+  "tags": ["tiles", "balls", "paddles", "coins", "pipes", "particles", "puzzle", "breakout", "grid"],
+  "types": ["sprites"],
+  "notes": "795 PNG sprites. Colored tiles (7 colors) work as grid/snake segments; Back tiles for backgrounds; Balls + Paddles for breakout-style games; Coins as pickups/food; Particles for effects. PNG only imported (Vector/Spritesheet variants omitted).",
+  "importedAt": "2026-07-02"
+}

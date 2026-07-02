@@ -1,10 +1,11 @@
 ---
 phase: 2
-title: "Asset Packs & Catalog Generator"
-status: pending
+title: Asset Packs & Catalog Generator
+status: in-progress
 priority: P1
-dependencies: [1]
-effort: "M"
+dependencies:
+  - 1
+effort: M
 ---
 
 # Phase 2: Asset Packs & Catalog Generator

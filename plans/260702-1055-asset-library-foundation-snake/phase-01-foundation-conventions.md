@@ -1,7 +1,7 @@
 ---
 phase: 1
 title: Foundation & Conventions
-status: in-progress
+status: completed
 priority: P1
 dependencies: []
 effort: S

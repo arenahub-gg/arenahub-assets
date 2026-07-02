@@ -1,0 +1,11 @@
+{
+  "id": "kenney-digital-audio",
+  "name": "Digital Audio",
+  "source": "https://kenney.nl/assets/digital-audio",
+  "license": "CC0-1.0",
+  "style": "retro-chiptune",
+  "tags": ["sfx", "retro", "pickup", "laser", "jump", "lose", "powerup", "tone"],
+  "types": ["audio"],
+  "notes": "62 OGG retro SFX. pepSound* = positive pickup/eat; lowDown/lowThreeTone = lose/negative; phaserUp*/powerUp* = powerups; laser* = shots; tone/highUp = UI feedback.",
+  "importedAt": "2026-07-02"
+}
