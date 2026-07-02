@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "snake",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--prefix", "games/snake", "--", "--port", "5173", "--strictPort"],
+      "port": 5173
+    }
+  ]
+}

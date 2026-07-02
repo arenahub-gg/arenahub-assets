@@ -1,10 +1,11 @@
 ---
 phase: 3
-title: "SDK Contract & Local Stub"
-status: pending
+title: SDK Contract & Local Stub
+status: completed
 priority: P1
-dependencies: [1]
-effort: "S"
+dependencies:
+  - 1
+effort: S
 ---
 
 # Phase 3: SDK Contract & Local Stub

@@ -1,10 +1,12 @@
 ---
 phase: 4
-title: "Snake Game"
-status: pending
+title: Snake Game
+status: in-progress
 priority: P1
-dependencies: [2, 3]
-effort: "M"
+dependencies:
+  - 2
+  - 3
+effort: M
 ---
 
 # Phase 4: Snake Game
