@@ -4,7 +4,7 @@ description: >-
   Greenfield foundation for AI-assembled game library: repo conventions, CC0
   asset packs + catalog, SDK contract-first stub, Snake reference game, reverse
   extraction into engine/components/template, acceptance test.
-status: in-progress
+status: pending
 priority: P2
 branch: ''
 tags:
@@ -43,7 +43,7 @@ Build the foundation of `arenahub-asset` — the knowledge/asset library Claude 
 | Phase | Name | Status |
 |-------|------|--------|
 | 1 | [Foundation & Conventions](./phase-01-foundation-conventions.md) | Completed |
-| 2 | [Asset Packs & Catalog Generator](./phase-02-asset-packs-catalog-generator.md) | In Progress |
+| 2 | [Asset Packs & Catalog Generator](./phase-02-asset-packs-catalog-generator.md) | Completed |
 | 3 | [SDK Contract & Local Stub](./phase-03-sdk-contract-local-stub.md) | Pending |
 | 4 | [Snake Game](./phase-04-snake-game.md) | Pending |
 | 5 | [Reverse Extraction](./phase-05-reverse-extraction.md) | Pending |

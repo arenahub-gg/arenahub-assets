@@ -1,7 +1,7 @@
 ---
 phase: 2
 title: Asset Packs & Catalog Generator
-status: in-progress
+status: completed
 priority: P1
 dependencies:
   - 1
