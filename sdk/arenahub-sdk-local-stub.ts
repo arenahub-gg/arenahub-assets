@@ -79,14 +79,16 @@ class LocalArenaHubSdk implements ArenaHubSDK {
     return ensureGuestPlayer();
   }
 
+  // High score lives under "arenahub:sys:" — outside the "arenahub:{gameId}:"
+  // namespace that sdk.storage exposes, so game writes can't corrupt it.
   async submitScore(gameId: string, score: number): Promise<void> {
-    const key = `arenahub:${gameId}:highscore`;
+    const key = `arenahub:sys:${gameId}:highscore`;
     const current = readJson<number>(key) ?? 0;
     if (score > current) localStorage.setItem(key, JSON.stringify(score));
   }
 
   async getHighScore(gameId: string): Promise<number | null> {
-    return readJson<number>(`arenahub:${gameId}:highscore`);
+    return readJson<number>(`arenahub:sys:${gameId}:highscore`);
   }
 }
 

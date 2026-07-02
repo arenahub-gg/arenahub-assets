@@ -21,4 +21,5 @@ Notes:
 ## R2 backlog (flagged by real games)
 
 - `touch-input.ts`: only 4-way swipe. Paddle games (breakout/pong) want continuous pointer-drag — add a pointer-track mode when the next paddle game lands.
-- SDK API redundancy: `createLocalSdk(gameId)` namespaces storage, but `submitScore`/`getHighScore` take `gameId` again — collapse when the platform SDK lands.
+- SDK gameId scoping: `createLocalSdk(gameId)` binds an id for storage but `submitScore`/`getHighScore` take `gameId` per call — nothing prevents a mismatch. Decide one scoping model (bind-at-creation preferred) with the platform team before the surface calcifies.
+- breakout-state.ts: `serveBall` uses `Math.random()` directly (snake injects rng) — thread rng through for deterministic tests; also cap `ballSpeed()` (uncapped linear growth could tunnel bricks around level ~30).

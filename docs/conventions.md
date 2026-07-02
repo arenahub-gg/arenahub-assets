@@ -11,7 +11,7 @@ Rules for maintaining `arenahub-asset`. Consumer-facing usage lives in `CLAUDE.m
 ## Directory semantics
 
 - `engine/`, `components/` — canonical sources. No imports FROM `games/` or `templates/`. Zero game-specific code (grep for game names must return no hits here).
-- `games/` — self-contained; each game builds standalone. Games never import from `engine/` directly; they carry vendored copies under `src/core/` and `src/ui/`.
+- `games/` — self-contained; each game's BUILT `dist/` runs standalone. Games never import from `engine/` directly; they carry vendored copies under `src/core/` and `src/ui/`. Exception: the `sdk/` import is live (not vendored) by design — it's bundled at build time, so SOURCE builds require the full repo checkout. Do not "fix" this by vendoring the SDK.
 - `templates/` — runnable skeletons carrying vendored copies of engine/components, kept in sync manually (R1; sync script only if drift hurts).
 - `rules/` — one file per game family, structured markdown (roles, phases, win conditions). Populated from R2.
 

@@ -1,7 +1,7 @@
 ---
 phase: 6
 title: Acceptance Validation
-status: in-progress
+status: completed
 priority: P2
 dependencies:
   - 5

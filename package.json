@@ -5,7 +5,8 @@
   "type": "module",
   "description": "ArenaHub asset & knowledge library — reusable building blocks for AI-assembled games",
   "scripts": {
-    "catalog": "node scripts/generate-asset-catalog.mjs"
+    "catalog": "node scripts/generate-asset-catalog.mjs",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "typescript": "^6.0.3"

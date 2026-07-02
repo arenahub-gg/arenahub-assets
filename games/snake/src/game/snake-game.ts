@@ -120,8 +120,14 @@ export class SnakeGame {
   }
 
   private async onDeath(): Promise<void> {
-    await this.sdk.submitScore(GAME_ID, this.state.score);
-    this.best = (await this.sdk.getHighScore(GAME_ID)) ?? this.state.score;
+    // SDK may reject once the real platform lands (server-authoritative score)
+    // — the overlay must show regardless or the player is stuck on a dead board.
+    try {
+      await this.sdk.submitScore(GAME_ID, this.state.score);
+      this.best = (await this.sdk.getHighScore(GAME_ID)) ?? this.state.score;
+    } catch {
+      this.best = Math.max(this.best, this.state.score);
+    }
     this.hud.update(this.state.score, this.best);
     this.overlay.show(this.state.score, this.best);
   }
