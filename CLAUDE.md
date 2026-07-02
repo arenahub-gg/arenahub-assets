@@ -34,8 +34,8 @@ Knowledge/asset library powering AI-assembled games for arenahub.gg. You (Claude
 
 ## Generating a new game (recipe)
 
-1. Copy `templates/canvas-game/` → `games/{game-name}/` (kebab-case).
-2. Rename in `package.json`; game id = folder name.
+1. Copy `templates/canvas-game/` → `games/{game-name}/` (kebab-case). Do NOT copy `node_modules/` or `dist/`.
+2. Replace every `RENAME-ME` / `RENAME ME` marker: `package.json` name, `index.html` title, `GAME_ID` in `src/main.ts` (= folder name).
 3. Pick assets via catalog; copy files into `public/assets/`; list provenance in `public/assets/SOURCES.md`.
 4. Write game logic in `src/game/` only. Keep `src/core/` (vendored engine) and `src/ui/` (vendored components) untouched unless the game truly needs an engine change — if so, note it for extraction review.
 5. Score/persistence via `sdk` stub: `createLocalSdk()` → `submitScore(gameId, score)`.

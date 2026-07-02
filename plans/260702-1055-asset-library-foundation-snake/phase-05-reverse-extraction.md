@@ -1,10 +1,11 @@
 ---
 phase: 5
-title: "Reverse Extraction"
-status: pending
+title: Reverse Extraction
+status: in-progress
 priority: P1
-dependencies: [4]
-effort: "M"
+dependencies:
+  - 4
+effort: M
 ---
 
 # Phase 5: Reverse Extraction

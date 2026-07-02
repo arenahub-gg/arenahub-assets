@@ -1,7 +1,7 @@
 ---
 phase: 4
 title: Snake Game
-status: in-progress
+status: completed
 priority: P1
 dependencies:
   - 2
