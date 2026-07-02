@@ -1,17 +1,21 @@
-// Downloads and extracts every Kenney pack listed in assets/packs-manifest.json.
+// Downloads and extracts every asset pack listed in assets/packs-manifest.json.
 // Binary payloads are gitignored — this script rebuilds assets/ on a fresh clone.
-// The current zip URL is scraped from each pack page at runtime (Kenney embeds a
-// content hash in download URLs, so pinning them in the manifest would rot).
+//
+// Multi-source: each manifest entry may carry a "source" key (default "kenney")
+// dispatched through scripts/asset-source-resolvers.mjs. Packs land in
+// assets/{source}-{slug}/ so ids never collide across sources.
 //
 // Usage:
-//   node scripts/download-asset-packs.mjs              # all missing packs
+//   node scripts/download-asset-packs.mjs                 # all missing packs
 //   node scripts/download-asset-packs.mjs --only tiny-farm
+//   node scripts/download-asset-packs.mjs --source kenney # one source only
 //   node scripts/download-asset-packs.mjs --concurrency 6
 import AdmZip from "adm-zip";
 import { mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import { join, extname } from "node:path";
 import { tmpdir } from "node:os";
 import { fileURLToPath } from "node:url";
+import { resolvers, DEFAULT_SOURCE } from "./asset-source-resolvers.mjs";
 
 const repoRoot = fileURLToPath(new URL("..", import.meta.url));
 const assetsDir = join(repoRoot, "assets");
@@ -19,6 +23,7 @@ const manifestPath = join(assetsDir, "packs-manifest.json");
 
 const args = process.argv.slice(2);
 const onlySlug = args.includes("--only") ? args[args.indexOf("--only") + 1] : null;
+const onlySource = args.includes("--source") ? args[args.indexOf("--source") + 1] : null;
 const concurrency = args.includes("--concurrency")
   ? Number(args[args.indexOf("--concurrency") + 1]) || 4
   : 4;
@@ -57,20 +62,20 @@ async function removeJunk(dir) {
   }
 }
 
-async function importPack({ slug, category }) {
-  const dir = join(assetsDir, `kenney-${slug}`);
-  if (await dirHasPayload(dir)) return { slug, status: "skipped (exists)" };
+async function importPack(entry) {
+  const { slug, category } = entry;
+  const source = entry.source ?? DEFAULT_SOURCE;
+  const packId = `${source}-${slug}`;
+  const dir = join(assetsDir, packId);
+  if (await dirHasPayload(dir)) return { packId, status: "skipped (exists)" };
 
-  const pageUrl = `https://kenney.nl/assets/${slug}`;
-  const html = await (await fetch(pageUrl)).text();
-  const zipMatch = html.match(/https:\/\/kenney\.nl\/media\/pages\/assets\/[^'"]+\.zip/);
-  if (!zipMatch) throw new Error(`no zip url found on ${pageUrl}`);
-  const nameMatch = html.match(/<title>\s*(.+?)\s*(?:&middot;|·|\||<)/);
-  const name = nameMatch?.[1]?.trim() ?? slug;
+  const resolve = resolvers[source];
+  if (!resolve) throw new Error(`no resolver for source "${source}" (add one in asset-source-resolvers.mjs)`);
+  const { zipUrl, name, license, homepage } = await resolve(entry);
 
-  const zipRes = await fetch(zipMatch[0]);
-  if (!zipRes.ok) throw new Error(`download failed ${zipRes.status}: ${zipMatch[0]}`);
-  const zipPath = join(tmpdir(), `kenney-${slug}.zip`);
+  const zipRes = await fetch(zipUrl);
+  if (!zipRes.ok) throw new Error(`download failed ${zipRes.status}: ${zipUrl}`);
+  const zipPath = join(tmpdir(), `${packId}.zip`);
   await writeFile(zipPath, Buffer.from(await zipRes.arrayBuffer()));
 
   await mkdir(dir, { recursive: true });
@@ -90,12 +95,12 @@ async function importPack({ slug, category }) {
       packJsonPath,
       JSON.stringify(
         {
-          id: `kenney-${slug}`,
+          id: packId,
           name,
-          source: pageUrl,
-          license: "CC0-1.0",
+          source: homepage,
+          license,
           style: "uncurated",
-          tags: [category.toLowerCase()],
+          tags: category ? [category.toLowerCase()] : [],
           types,
           importedAt: new Date().toISOString().slice(0, 10),
         },
@@ -105,15 +110,16 @@ async function importPack({ slug, category }) {
       "utf8",
     );
   }
-  return { slug, status: "imported" };
+  return { packId, status: "imported" };
 }
 
 async function main() {
   // strip a UTF-8 BOM if present (Windows editors/PowerShell add one)
   let manifest = JSON.parse((await readFile(manifestPath, "utf8")).replace(/^﻿/, ""));
   if (onlySlug) manifest = manifest.filter((p) => p.slug === onlySlug);
+  if (onlySource) manifest = manifest.filter((p) => (p.source ?? DEFAULT_SOURCE) === onlySource);
   if (manifest.length === 0) {
-    console.error(onlySlug ? `slug not in manifest: ${onlySlug}` : "empty manifest");
+    console.error("no matching manifest entries (check --only / --source)");
     process.exit(1);
   }
 
@@ -125,7 +131,8 @@ async function main() {
     for (;;) {
       const pack = queue.shift();
       if (!pack) return;
-      const label = `[${++done}/${manifest.length}] kenney-${pack.slug}`;
+      const packId = `${pack.source ?? DEFAULT_SOURCE}-${pack.slug}`;
+      const label = `[${++done}/${manifest.length}] ${packId}`;
       try {
         // one retry on transient network errors
         let result;
@@ -136,7 +143,7 @@ async function main() {
         }
         console.log(`${label} ${result.status}`);
       } catch (err) {
-        failures.push(pack.slug);
+        failures.push(packId);
         console.error(`${label} FAILED: ${err.message}`);
       }
     }

@@ -51,6 +51,13 @@ Every pack dir in `assets/` must contain:
 - The two R1 packs (`kenney-puzzle-pack-2`, `kenney-digital-audio`) predate this policy and stay fully tracked in git — games vendor from them.
 - To add a new pack: append `{slug, category}` to `assets/packs-manifest.json`, run `npm run assets:download`, curate `pack.json`, run `npm run catalog`.
 
+### Multiple sources
+
+- Manifest entries may carry a `source` key (default `"kenney"`); packs land in `assets/{source}-{slug}/` so ids never collide.
+- Add a new source = add a resolver in `scripts/asset-source-resolvers.mjs` (returns `{zipUrl, name, license, homepage}` for an entry) + manifest entries tagged with that source key. No change to the downloader core.
+- `npm run assets:download -- --source <key>` restricts a run to one source.
+- **License is per-pack**, carried in `pack.json` from the resolver. Kenney = CC0 (no attribution). A non-CC0 source (e.g. CC-BY) obliges every game using its assets to render attribution — track this before shipping. Do not mix a CC-BY pack into a game without an attribution surface.
+
 ## Extraction procedure (how the library grows)
 
 1. Build the game fully inside `games/{name}/`, separating `src/core/` (generic) from `src/game/` (specific) from day 1.
