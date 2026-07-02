@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ArenaHub Asset Library — Brainstorm Report</title>
+<style>
+:root {
+  --ink: #0a0a0a;
+  --ink-soft: #1a1a1a;
+  --paper: #faf7f2;
+  --paper-warm: #f0ebe1;
+  --accent: #b8232c;
+  --accent-soft: #e8d4d6;
+  --gold: #8a6f2c;
+  --muted: #6b6258;
+  --hairline: rgba(10,10,10,0.12);
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'Inter Tight', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', Consolas, monospace;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: var(--paper); color: var(--ink); font: 15px/1.65 var(--sans); }
+.slide { min-height: 100vh; padding: 60px 8vw; border-bottom: 1px solid var(--hairline); position: relative; }
+.container { max-width: 1240px; margin: 0 auto; }
+.slide-tag { position: absolute; top: 28px; left: 8vw; font: 500 11px var(--mono); text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent); }
+.slide-num { position: absolute; top: 28px; right: 8vw; font: 400 11px var(--mono); letter-spacing: 0.15em; color: var(--muted); }
+h1 { font: 300 clamp(60px, 11vw, 180px)/0.92 var(--serif); letter-spacing: -0.02em; }
+h2 { font: 300 clamp(48px, 7vw, 100px)/1.02 var(--serif); letter-spacing: -0.02em; }
+h2 em, h1 em { color: var(--accent); font-style: italic; }
+h3 { font: 400 clamp(20px, 2vw, 26px)/1.25 var(--serif); }
+h4 { font: 500 11px var(--mono); text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted); margin-bottom: 14px; }
+.lead { font: 400 clamp(18px, 1.6vw, 22px)/1.5 var(--serif); max-width: 720px; }
+.eyebrow { font: 500 11px var(--mono); text-transform: uppercase; letter-spacing: 0.18em; color: var(--accent); display: block; margin-bottom: 24px; }
+p + p { margin-top: 14px; }
+.two-col { display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: start; }
+.three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.card { background: var(--paper-warm); padding: 36px 32px; border: 1px solid var(--hairline); position: relative; }
+.card.dark { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.card.dark h4 { color: rgba(250,247,242,0.55); }
+.card-mark { position: absolute; top: 20px; right: 24px; font: 400 11px var(--mono); color: var(--muted); }
+.card.dark .card-mark { color: rgba(250,247,242,0.45); }
+.card h3 { margin-bottom: 12px; }
+.card p { font-size: 14px; color: var(--ink-soft); }
+.card.dark p { color: rgba(250,247,242,0.82); }
+.track-box { border-left: 3px solid var(--accent); background: var(--paper-warm); padding: 40px 44px; }
+.pull-quote { border-left: 2px solid var(--accent); padding: 12px 0 12px 40px; font: 300 italic clamp(28px, 3.6vw, 44px)/1.25 var(--serif); max-width: 900px; }
+table { width: 100%; border-collapse: collapse; }
+th { font: 500 10px var(--mono); text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); text-align: left; padding: 12px 16px 12px 0; border-bottom: 1.5px solid var(--ink); }
+td { padding: 16px 16px 16px 0; border-bottom: 1px solid var(--hairline); vertical-align: top; font-size: 14px; }
+tr:last-child td { border-bottom: 1.5px solid var(--ink); }
+td:first-child { font: 500 16px var(--serif); }
+.col-featured { background: rgba(184,35,44,0.04); }
+.meta-row { display: flex; gap: 48px; flex-wrap: wrap; margin-top: 48px; }
+.meta-item { font: 400 12px var(--mono); letter-spacing: 0.08em; color: var(--muted); }
+.meta-item strong { display: block; color: var(--ink); font-weight: 500; margin-top: 4px; }
+pre { font: 400 12.5px/1.7 var(--mono); background: var(--ink); color: var(--paper); padding: 32px 36px; overflow-x: auto; }
+pre .c { color: rgba(250,247,242,0.45); }
+.qa-item { border-bottom: 1px solid var(--hairline); padding: 20px 0; display: grid; grid-template-columns: 1fr 1.4fr; gap: 32px; }
+.qa-item:last-child { border-bottom: 1.5px solid var(--ink); }
+.qa-item .q { font: 500 11px var(--mono); text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); padding-top: 3px; }
+.qa-item .a { font: 400 16px var(--serif); }
+ul.plain { list-style: none; }
+ul.plain li { padding: 12px 0 12px 28px; border-bottom: 1px solid var(--hairline); position: relative; font-size: 14px; }
+ul.plain li::before { content: "—"; position: absolute; left: 0; color: var(--accent); }
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .9s cubic-bezier(.22,1,.36,1), transform .9s cubic-bezier(.22,1,.36,1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.delay-1 { transition-delay: .12s; }
+.delay-2 { transition-delay: .24s; }
+@media (prefers-reduced-motion: reduce), print {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+@media (max-width: 900px) {
+  .slide { padding: 60px 6vw; }
+  .slide-tag { left: 6vw; }
+  .slide-num { right: 6vw; }
+  .two-col, .three-col, .qa-item { grid-template-columns: 1fr; gap: 32px; }
+}
+</style>
+</head>
+<body>
+
+<!-- 01 · COVER -->
+<section class="slide" id="cover">
+  <span class="slide-tag">■ 01 · Brainstorm Report</span>
+  <span class="slide-num">01 / 08</span>
+  <div class="container" style="display:flex; flex-direction:column; justify-content:center; min-height:80vh;">
+    <div class="reveal">
+      <span class="eyebrow">arenahub.gg · Knowledge Library</span>
+      <h1>Asset Library.<br><em>Trích xuất, không phỏng đoán.</em></h1>
+      <p class="lead" style="margin-top:40px;">Nền tảng để Claude lắp ráp game từ các khối tái sử dụng — bắt đầu bằng một game thật, không phải một taxonomy trên giấy.</p>
+    </div>
+    <div class="meta-row reveal delay-1">
+      <div class="meta-item">DATE<strong>2026-07-02</strong></div>
+      <div class="meta-item">REPO<strong>E:\development\arenahub-asset</strong></div>
+      <div class="meta-item">MODE<strong>/brainstorm --html</strong></div>
+      <div class="meta-item">STATUS<strong>Design approved</strong></div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 · PROBLEM -->
+<section class="slide" id="problem">
+  <span class="slide-tag">■ 02 · Problem</span>
+  <span class="slide-num">02 / 08</span>
+  <div class="container">
+    <div class="reveal">
+      <h4>Problem-first decompression</h4>
+      <h2>Taxonomy 11 nhánh là<br><em>lời thú nhận nén của ba nỗi đau.</em></h2>
+    </div>
+    <div class="pull-quote reveal delay-1" style="margin:60px 0;">
+      AI generate game từ đầu cho ra kết quả không ổn định, chất lượng thấp — mỗi lần làm lại từ zero, không tận dụng được gì từ lần trước.
+    </div>
+    <div class="three-col reveal delay-2">
+      <div class="card"><div class="card-mark">A</div><h4>Consistency</h4><h3>Mỗi game một kiểu stack</h3><p>Game generate ra không plug vào platform theo một contract thống nhất. Không auth, không leaderboard, không deploy chuẩn.</p></div>
+      <div class="card"><div class="card-mark">B</div><h4>Asset bottleneck</h4><h3>Claude không tạo được art/audio</h3><p>Code là thứ rẻ nhất — Claude đã viết được. Sprites, SFX, animation frames là tài nguyên khan hiếm thật sự.</p></div>
+      <div class="card"><div class="card-mark">C</div><h4>Knowledge</h4><h3>Suy lại rules mỗi lần</h3><p>Luật poker, werewolf, chess bị tái phát minh ở mỗi session thay vì đọc từ spec có cấu trúc.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 · EVIDENCE -->
+<section class="slide" id="evidence">
+  <span class="slide-tag">■ 03 · Evidence</span>
+  <span class="slide-num">03 / 08</span>
+  <div class="container">
+    <div class="reveal">
+      <h4>Codebase facts &amp; user signal</h4>
+      <h2>Greenfield tuyệt đối.<br><em>Mọi quyết định đều mở.</em></h2>
+    </div>
+    <div class="two-col" style="margin-top:60px;">
+      <div class="reveal delay-1">
+        <h4>Scout findings</h4>
+        <ul class="plain">
+          <li>Repo rỗng 100% — không README, không docs, không git, không code</li>
+          <li>Platform arenahub.gg đang build, chưa có game nào live</li>
+          <li>Contract game ↔ platform chưa tồn tại — được tự do định nghĩa</li>
+          <li>Evidence status: <strong>weak-to-medium</strong> — niềm tin founder + pattern ngành, chưa có production data. Đủ để build một lát cắt validate được, không đủ để build full taxonomy.</li>
+        </ul>
+      </div>
+      <div class="reveal delay-2">
+        <h4>Quyết định đã chốt qua Q&amp;A</h4>
+        <div class="qa-item"><div class="q">Game stack</div><div class="a">HTML5 Canvas thuần + TypeScript, không engine framework</div></div>
+        <div class="qa-item"><div class="q">Asset source</div><div class="a">CC0 packs (Kenney...) — license sạch, style nhất quán</div></div>
+        <div class="qa-item"><div class="q">Consumption</div><div class="a">Git repo + catalog markdown — Claude đọc bằng Glob/Grep/Read, zero infra</div></div>
+        <div class="qa-item"><div class="q">Scope R1</div><div class="a">Foundation + 1 game hoàn chỉnh, trích xuất ngược</div></div>
+        <div class="qa-item"><div class="q">Multiplayer</div><div class="a">Contract-first: SDK interface ngay, stub localStorage, game đầu single-player</div></div>
+        <div class="qa-item"><div class="q">First game</div><div class="a">Snake — họ pattern real-time: game loop, input, collision, render, score</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 · OPTIONS -->
+<section class="slide" id="options">
+  <span class="slide-tag">■ 04 · Options</span>
+  <span class="slide-num">04 / 08</span>
+  <div class="container">
+    <div class="reveal">
+      <h4>Approaches evaluated</h4>
+      <h2>Bốn con đường.<br><em>Ba bị loại có lý do.</em></h2>
+    </div>
+    <div class="reveal delay-1" style="margin-top:60px; overflow-x:auto;">
+      <table>
+        <thead>
+          <tr><th>Approach</th><th class="col-featured">Foundation + 1 game</th><th>Foundation only</th><th>Full taxonomy</th><th>Multiplayer ngay</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Validate bằng game thật</td><td class="col-featured">Có — Snake dùng thư viện ngay</td><td>Không</td><td>Không</td><td>Có nhưng gánh 2 đầu bất ổn</td></tr>
+          <tr><td>Tốc độ ra kết quả</td><td class="col-featured">Trung bình</td><td>Nhanh nhất</td><td>Chậm nhất (nhiều tháng)</td><td>Chậm</td></tr>
+          <tr><td>Rủi ro YAGNI</td><td class="col-featured">Thấp — chỉ build thứ Snake dùng</td><td>Trung bình</td><td>Rất cao — API phỏng đoán</td><td>Cao</td></tr>
+          <tr><td>Verdict</td><td class="col-featured"><strong>CHỌN</strong></td><td>Loại — không kiểm chứng được</td><td>Loại — speculative design</td><td>Loại — contract chưa chốt</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="pull-quote reveal delay-2" style="margin-top:60px;">
+      Thư viện tốt được trích xuất từ game đã chạy — không phải thiết kế trước trên giấy.
+    </div>
+  </div>
+</section>
+
+<!-- 05 · RECOMMENDATION -->
+<section class="slide" id="recommendation">
+  <span class="slide-tag">■ 05 · Recommendation</span>
+  <span class="slide-num">05 / 08</span>
+  <div class="container">
+    <div class="reveal">
+      <h4>Approved design</h4>
+      <h2>Ba nguyên tắc.<br><em>Một cấu trúc repo.</em></h2>
+    </div>
+    <div class="three-col reveal delay-1" style="margin:60px 0;">
+      <div class="card"><div class="card-mark">01</div><h4>Extract</h4><h3>Trích xuất từ game thật</h3><p>Round 1 chỉ tạo những gì Snake thực sự dùng, cộng khung để mở rộng. Component API sai sẽ bị game thứ hai ép refactor — đó là cách thư viện trưởng thành.</p></div>
+      <div class="card"><div class="card-mark">02</div><h4>Consumer</h4><h3>Claude là người dùng</h3><p>Search = Glob/Grep/Read trên tên file mô tả + catalog markdown sinh bằng script. Metadata mức pack, không mức file. Không vector DB, không API.</p></div>
+      <div class="card dark"><div class="card-mark">03</div><h4>Ship</h4><h3>Game self-contained</h3><p>Engine và components được vendor (copy vào) lúc generate. Game deploy CDN dạng static, đóng băng phiên bản engine nó dùng. Thư viện tiến hóa tự do.</p></div>
+    </div>
+    <div class="two-col reveal delay-2">
+      <div>
+        <h4>Repo structure</h4>
+        <pre>arenahub-asset/
+├── CLAUDE.md          <span class="c"># entry point cho Claude</span>
+├── catalog/           <span class="c"># MD sinh tự động</span>
+├── assets/
+│   └── kenney-{pack}/
+│       └── pack.json  <span class="c"># style, tags, license</span>
+├── engine/            <span class="c"># game-loop, input, renderer,</span>
+│                      <span class="c"># audio-player, asset-loader</span>
+├── components/        <span class="c"># score, timer, hud...</span>
+├── sdk/
+│   ├── arenahub-sdk.ts            <span class="c"># interface</span>
+│   └── arenahub-sdk-local-stub.ts <span class="c"># localStorage</span>
+├── templates/
+│   └── canvas-game/   <span class="c"># Vite + TS starter</span>
+├── games/
+│   └── snake/         <span class="c"># demo + reference</span>
+├── rules/             <span class="c"># round sau</span>
+└── docs/</pre>
+      </div>
+      <div class="track-box">
+        <h4>Execution flow — 6 bước</h4>
+        <ul class="plain">
+          <li>Dựng structure + conventions + CLAUDE.md</li>
+          <li>Import 1-2 Kenney pack (sprites + SFX) + script sinh catalog</li>
+          <li>Định nghĩa SDK interface + local stub</li>
+          <li>Build Snake hoàn chỉnh — asset thật, SDK stub, score</li>
+          <li>Trích xuất ngược: generic → engine/ + components/; khung → templates/canvas-game/</li>
+          <li>Acceptance test: session mới, prompt "làm breakout" → game chạy được, dùng thư viện</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 · RISKS -->
+<section class="slide" id="risks">
+  <span class="slide-tag">■ 06 · Risks</span>
+  <span class="slide-num">06 / 08</span>
+  <div class="container">
+    <div class="reveal">
+      <h4>Assumptions &amp; failure modes</h4>
+      <h2>Rủi ro được chấp nhận<br><em>có chủ đích.</em></h2>
+    </div>
+    <div class="reveal delay-1" style="margin-top:60px; overflow-x:auto;">
+      <table>
+        <thead><tr><th style="width:38%;">Risk</th><th>Mitigation</th></tr></thead>
+        <tbody>
+          <tr><td>Trích xuất từ 1 game → component API sai</td><td>Chấp nhận. Round 2 (Caro — turn-based) ép refactor; đó là con đường trưởng thành dự kiến của thư viện.</td></tr>
+          <tr><td>Style Kenney không khớp brand ArenaHub</td><td>Field <code>style</code> trong pack.json từ ngày đầu — thay pack không ảnh hưởng cấu trúc.</td></tr>
+          <tr><td>Platform contract khác với SDK interface đoán trước</td><td>Interface giữ tối thiểu (identity, score, storage, room); stub cô lập vùng ảnh hưởng.</td></tr>
+          <tr><td>Engine vendor bị drift giữa các game</td><td>Chấp nhận theo thiết kế — game đã deploy được đóng băng; template luôn vendor bản mới nhất.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="track-box reveal delay-2" style="margin-top:48px;">
+      <h4>Success metrics</h4>
+      <p>Session Claude mới generate được game Canvas mới chạy được mà không viết lại engine/asset từ đầu · Snake chạy trong browser với asset thư viện + score qua SDK stub · Catalog sinh lại được bằng script, grep tìm được asset theo keyword · Zero infra bên ngoài.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 07 · HANDOFF -->
+<section class="slide" id="handoff">
+  <span class="slide-tag">■ 07 · Handoff</span>
+  <span class="slide-num">07 / 08</span>
+  <div class="container">
+    <div class="reveal">
+      <h4>Next steps</h4>
+      <h2>Từ report<br><em>sang plan.</em></h2>
+    </div>
+    <div class="three-col reveal delay-1" style="margin-top:60px;">
+      <div class="card dark"><div class="card-mark">R1</div><h4>Now</h4><h3>/ck:plan (default)</h3><p>Plan hóa report này thành các phase triển khai. Greenfield, chưa có test hiện hữu — không cần TDD gate.</p></div>
+      <div class="card"><div class="card-mark">R2</div><h4>Next</h4><h3>Caro — turn-based</h3><p>Game thứ hai thuộc họ pattern khác, ép refactor component API và khởi tạo rules/ với các spec đầu tiên.</p></div>
+      <div class="card"><div class="card-mark">R3</div><h4>Later</h4><h3>Platform &amp; multiplayer</h3><p>SDK implementation thật, room WebSocket, pipeline AI-generated asset — khi platform contract đã chốt.</p></div>
+    </div>
+    <div class="reveal delay-2" style="margin-top:48px;">
+      <h4>Unresolved questions</h4>
+      <ul class="plain">
+        <li>Chọn Kenney pack cụ thể nào (hướng style) — quyết trong lúc implement</li>
+        <li>Brand/style guide của ArenaHub chưa có — ảnh hưởng curation pack sau này, không ảnh hưởng cấu trúc</li>
+        <li>Shape của auth/identity platform — field set của <code>getPlayer()</code> là phỏng đoán cho đến khi platform team xác nhận</li>
+      </ul>
+      <p style="margin-top:24px; font: 400 12px var(--mono); color: var(--muted);">Markdown report: plans\reports\brainstorm-260702-1055-arenahub-asset-library-foundation-report.md</p>
+    </div>
+  </div>
+</section>
+
+<!-- 08 · CLOSING -->
+<section class="slide" id="closing" style="border-bottom:none;">
+  <span class="slide-tag">■ 08 · Decision</span>
+  <span class="slide-num">08 / 08</span>
+  <div class="container" style="display:flex; flex-direction:column; justify-content:center; min-height:80vh;">
+    <div class="reveal">
+      <h2>Build foundation + Snake.<br><em>Trích xuất thư viện từ game thật.</em></h2>
+      <p class="lead" style="margin-top:40px;">Vanilla Canvas + TS · CC0 assets · git repo + catalog markdown · SDK contract-first với stub. Full taxonomy, search infra, multiplayer implementation — hoãn cho đến khi có bằng chứng từ game thật.</p>
+    </div>
+    <div class="meta-row reveal delay-1">
+      <div class="meta-item">APPROVED BY<strong>User · 2026-07-02</strong></div>
+      <div class="meta-item">NEXT<strong>/ck:plan → phased implementation</strong></div>
+    </div>
+  </div>
+</section>
+
+<script>
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

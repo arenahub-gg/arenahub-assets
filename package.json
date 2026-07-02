@@ -1,0 +1,10 @@
+{
+  "name": "arenahub-asset",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "ArenaHub asset & knowledge library — reusable building blocks for AI-assembled games",
+  "scripts": {
+    "catalog": "node scripts/generate-asset-catalog.mjs"
+  }
+}
