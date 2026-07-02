@@ -78,7 +78,7 @@ Search this file by keyword (grep) to find asset paths. Paths are repo-relative.
 
 - License: CC0-1.0 | Source: https://kenney.nl/assets/puzzle-pack-2
 - Style: `flat-vector-64px` | Tags: tiles, balls, paddles, coins, pipes, particles, puzzle, breakout, grid
-- Notes: 795 PNG sprites. Colored tiles (7 colors) work as grid/snake segments; Back tiles for backgrounds; Balls + Paddles for breakout-style games; Coins as pickups/food; Particles for effects. PNG only imported (Vector/Spritesheet variants omitted).
+- Notes: 795 PNG sprites. Colored tiles (7 colors) work as grid/snake segments; Back tiles for backgrounds; Balls + Paddles for breakout-style games; Coins as pickups/food; Particles for effects. No rectangular brick sprites — square beveled tiles stretch ~2.4:1 cleanly as bricks. PNG only imported (Vector/Spritesheet variants omitted).
 
 ### sprites (795)
 

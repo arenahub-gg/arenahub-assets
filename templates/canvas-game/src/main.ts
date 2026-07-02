@@ -1,5 +1,7 @@
 // Bootstrap: wires engine modules + SDK + game. When you replace ExampleGame,
-// keep this structure — loop/input/renderer/SDK wiring stays the same.
+// you can keep the wiring here for tiny games, or move it into an orchestrator
+// class in src/game/ (what games/snake and games/breakout do) — either is fine;
+// the loop/input/renderer/SDK pieces stay the same.
 import { createLocalSdk } from "../../../sdk";
 import { GameLoop } from "./core/game-loop";
 import { KeyboardInput } from "./core/keyboard-input";

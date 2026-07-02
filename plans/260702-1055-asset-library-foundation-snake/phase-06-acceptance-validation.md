@@ -1,10 +1,11 @@
 ---
 phase: 6
-title: "Acceptance Validation"
-status: pending
+title: Acceptance Validation
+status: in-progress
 priority: P2
-dependencies: [5]
-effort: "S"
+dependencies:
+  - 5
+effort: S
 ---
 
 # Phase 6: Acceptance Validation

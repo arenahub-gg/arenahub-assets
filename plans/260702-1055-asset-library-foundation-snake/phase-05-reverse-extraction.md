@@ -1,7 +1,7 @@
 ---
 phase: 5
 title: Reverse Extraction
-status: in-progress
+status: completed
 priority: P1
 dependencies:
   - 4

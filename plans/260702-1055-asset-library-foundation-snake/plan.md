@@ -46,8 +46,8 @@ Build the foundation of `arenahub-asset` — the knowledge/asset library Claude 
 | 2 | [Asset Packs & Catalog Generator](./phase-02-asset-packs-catalog-generator.md) | Completed |
 | 3 | [SDK Contract & Local Stub](./phase-03-sdk-contract-local-stub.md) | Completed |
 | 4 | [Snake Game](./phase-04-snake-game.md) | Completed |
-| 5 | [Reverse Extraction](./phase-05-reverse-extraction.md) | In Progress |
-| 6 | [Acceptance Validation](./phase-06-acceptance-validation.md) | Pending |
+| 5 | [Reverse Extraction](./phase-05-reverse-extraction.md) | Completed |
+| 6 | [Acceptance Validation](./phase-06-acceptance-validation.md) | In Progress |
 
 **Dependency chain:** 1 → 2 → 3 → 4 → 5 → 6 (strictly sequential; each phase consumes prior outputs). Phase 2 and 3 could run in parallel after 1, but sequential is simpler and total scope is small.
 

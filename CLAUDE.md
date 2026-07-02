@@ -34,15 +34,15 @@ Knowledge/asset library powering AI-assembled games for arenahub.gg. You (Claude
 
 ## Generating a new game (recipe)
 
-1. Copy `templates/canvas-game/` → `games/{game-name}/` (kebab-case). Do NOT copy `node_modules/` or `dist/`.
-2. Replace every `RENAME-ME` / `RENAME ME` marker: `package.json` name, `index.html` title, `GAME_ID` in `src/main.ts` (= folder name).
+1. Copy `templates/canvas-game/` → `games/{game-name}/` (kebab-case). Do NOT copy `node_modules/` or `dist/`. `package-lock.json` is optional (npm install regenerates it). Delete `public/assets/.gitkeep` once real assets land.
+2. Replace every `RENAME-ME` / `RENAME ME` marker: `package.json` name, `index.html` title, and the game id (= folder name). The id lives in `src/main.ts` in the template; if you move orchestration into a class (like the reference games do), define it in ONE place and pass it along — don't duplicate the literal.
 3. Pick assets via catalog; copy files into `public/assets/`; list provenance in `public/assets/SOURCES.md`.
-4. Write game logic in `src/game/` only. Keep `src/core/` (vendored engine) and `src/ui/` (vendored components) untouched unless the game truly needs an engine change — if so, note it for extraction review.
-5. Score/persistence via `sdk` stub: `createLocalSdk()` → `submitScore(gameId, score)`.
+4. Write game logic in `src/game/` only. Keep `src/core/` (vendored engine) and `src/ui/` (vendored components) untouched unless the game truly needs an engine change — if so, note it for extraction review. You MAY restructure `main.ts` wiring into an orchestrator class in `src/game/` (both reference games do).
+5. Score/persistence via `sdk` stub: `createLocalSdk()` → `submitScore(gameId, score)`. Note: the SDK is intentionally NOT vendored — it's the one live library import, bundled into `dist/` at build time. Source builds therefore require the full repo checkout; built games stay self-contained.
 6. Verify: `npm install && npm run dev` plays; `npm run build` produces a standalone `dist/`.
-7. Add the game to `catalog/games-catalog.md`.
+7. Library-level follow-up (outside the game folder): add a row to `catalog/games-catalog.md`. If your task forbids edits outside the game folder, report this step as pending instead of skipping it silently.
 
-Reference implementation: `games/snake/` — read it when unsure how pieces fit.
+Reference implementations: `games/snake/` (grid/real-time) and `games/breakout/` (physics/paddle) — read them when unsure how pieces fit.
 
 ## Stack
 
