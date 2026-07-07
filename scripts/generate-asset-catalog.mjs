@@ -14,6 +14,7 @@ const TYPE_BY_EXT = {
   ".png": "sprites", ".jpg": "sprites", ".gif": "sprites", ".svg": "sprites",
   ".ogg": "audio", ".mp3": "audio", ".wav": "audio",
   ".ttf": "fonts", ".otf": "fonts", ".woff": "fonts", ".woff2": "fonts",
+  ".glb": "3d-models", ".gltf": "3d-models", ".fbx": "3d-models", ".obj": "3d-models", ".mtl": "3d-models",
 };
 const IGNORED_FILES = new Set(["pack.json", "desktop.ini", "thumbs.db"]);
 

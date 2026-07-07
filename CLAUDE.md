@@ -15,7 +15,7 @@ Knowledge/asset library powering AI-assembled games for arenahub.gg. You (Claude
 | Path | What lives here |
 |---|---|
 | `catalog/` | Generated markdown catalogs — START HERE to find anything. Regenerate: `npm run catalog` |
-| `assets/` | CC0 binary packs (`kenney-*/`), each with `pack.json` metadata. Binary payloads are gitignored — on a fresh clone run `npm install && npm run assets:download` (manifest: `assets/packs-manifest.json`, ~207 Kenney packs) |
+| `assets/` | CC0 binary packs (`kenney-*/`), each with `pack.json` metadata. Binary payloads are gitignored — on a fresh clone run `npm install && npm run assets:download` (manifest: `assets/packs-manifest.json`, ~207 Kenney packs). Exception: AI-generated packs (`meshy-*/`) ARE committed — no re-download source |
 | `engine/` | Canonical core TS modules: game loop, input, renderer, asset loader, audio |
 | `components/` | Canonical reusable UI/systems: HUD, overlays, ... |
 | `sdk/` | `ArenaHubSDK` interface + localStorage stub. Import from `sdk/index.ts` |
@@ -31,6 +31,7 @@ Knowledge/asset library powering AI-assembled games for arenahub.gg. You (Claude
    - Example — find an explosion SFX: `Grep pattern:"explosion" path:"catalog/"` → returns relative paths like `assets/kenney-.../audio/explosion-01.ogg`.
 2. Filenames are the search index (Kenney names are descriptive). If the catalog misses, glob: `assets/**/*food*`.
 3. Check the pack's `pack.json` for `style` before mixing packs — keep one style per game.
+4. Nothing fits? Generate a 3D model via the `meshy-model-gen` skill (needs `MESHY_API_KEY`; see `docs/generated-assets-guide.md`). Generated packs land in `assets/meshy-*/` with per-pack license — ALWAYS check `license` in `pack.json` before use: `CC-BY-4.0` packs require in-game attribution.
 
 ## Generating a new game (recipe)
 

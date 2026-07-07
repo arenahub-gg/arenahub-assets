@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meshy MCP &amp; Model Generation — Brainstorm Report</title>
+<style>
+:root {
+  --ink: #0a0a0a;
+  --ink-soft: #1a1a1a;
+  --paper: #faf7f2;
+  --paper-warm: #f0ebe1;
+  --accent: #b8232c;
+  --accent-soft: #e8d4d6;
+  --gold: #8a6f2c;
+  --muted: #6b6258;
+  --hairline: rgba(10,10,10,0.12);
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'Inter Tight', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', Consolas, monospace;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--paper); color: var(--ink); font: 15px/1.65 var(--sans); }
+.slide { min-height: 100vh; padding: 60px 8vw; border-bottom: 1px solid var(--hairline); position: relative; }
+.container { max-width: 1240px; margin: 0 auto; }
+.slide-tag { position: absolute; top: 28px; left: 8vw; font: 500 11px var(--mono); text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent); }
+.slide-num { position: absolute; top: 28px; right: 8vw; font: 400 11px var(--mono); letter-spacing: 0.15em; color: var(--muted); }
+h1 { font: 300 clamp(60px, 11vw, 180px)/0.92 var(--serif); letter-spacing: -0.02em; }
+h2 { font: 300 clamp(40px, 6vw, 90px)/1.02 var(--serif); letter-spacing: -0.015em; }
+h2 em, h1 em { color: var(--accent); font-style: italic; }
+h3 { font: 400 clamp(20px, 2.2vw, 30px)/1.2 var(--serif); margin-bottom: 12px; }
+h4 { font: 500 11px var(--mono); text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted); margin-bottom: 16px; }
+.lead { font: 400 clamp(18px, 1.6vw, 22px)/1.5 var(--serif); max-width: 720px; }
+p { max-width: 68ch; }
+.two-col { display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; }
+.three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.card { background: var(--paper-warm); padding: 36px 32px; border: 1px solid var(--hairline); position: relative; }
+.card.dark { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.card.dark h4 { color: rgba(250,247,242,0.6); }
+.card-mark { position: absolute; top: 20px; right: 24px; font: 400 11px var(--mono); color: var(--muted); }
+.card.dark .card-mark { color: rgba(250,247,242,0.5); }
+.track-box { border-left: 3px solid var(--accent); background: var(--paper-warm); padding: 40px 44px; }
+.pull-quote { border-left: 2px solid var(--accent); padding: 12px 0 12px 40px; font: 300 italic clamp(26px, 3.2vw, 42px)/1.25 var(--serif); max-width: 900px; }
+table { border-collapse: collapse; width: 100%; }
+th { font: 500 10px var(--mono); text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); text-align: left; padding: 12px 16px 12px 0; border-bottom: 1.5px solid var(--ink); }
+td { padding: 14px 16px 14px 0; border-bottom: 1px solid var(--hairline); vertical-align: top; }
+tr:last-child td { border-bottom: 1.5px solid var(--ink); }
+td:first-child { font: 500 15px var(--serif); }
+.featured td { background: rgba(184,35,44,0.04); }
+code { font: 400 12.5px var(--mono); background: var(--paper-warm); padding: 2px 6px; }
+pre { background: var(--ink); color: var(--paper); padding: 28px 32px; overflow-x: auto; font: 400 12.5px/1.7 var(--mono); }
+pre code { background: none; padding: 0; }
+.meta-row { display: flex; gap: 48px; flex-wrap: wrap; font: 400 12px var(--mono); letter-spacing: 0.08em; color: var(--muted); text-transform: uppercase; }
+.meta-row strong { color: var(--ink); font-weight: 500; }
+.num-stat { font: 300 clamp(48px, 5vw, 80px)/1 var(--serif); color: var(--accent); }
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .9s cubic-bezier(.22,1,.36,1), transform .9s cubic-bezier(.22,1,.36,1); }
+.reveal.visible { opacity: 1; transform: none; }
+.delay-1 { transition-delay: .15s; } .delay-2 { transition-delay: .3s; }
+@media (prefers-reduced-motion: reduce), print { .reveal { opacity: 1; transform: none; transition: none; } }
+@media (max-width: 900px) {
+  .slide { padding: 60px 6vw; }
+  .slide-tag { left: 6vw; } .slide-num { right: 6vw; }
+  .two-col, .three-col { grid-template-columns: 1fr; gap: 32px; }
+}
+</style>
+</head>
+<body>
+
+<!-- 01 COVER -->
+<section class="slide" id="cover">
+  <div class="container" style="display:flex; flex-direction:column; justify-content:center; min-height:80vh;">
+    <div class="reveal visible">
+      <h4>Brainstorm Report · ArenaHub Asset Library</h4>
+      <h1>Generate,<br>ingest,<br><em>assemble.</em></h1>
+      <p class="lead" style="margin-top:40px;">Kế hoạch cắm Meshy MCP vào pipeline asset, mã hoá quy trình generate model thành skill dùng chung cho nhiều người — và vị trí thật sự của Unity trong bức tranh.</p>
+      <div class="meta-row" style="margin-top:56px;">
+        <span>Date <strong>2026-07-07</strong></span>
+        <span>Repo <strong>arenahub-asset</strong></span>
+        <span>Mode <strong>--html</strong></span>
+        <span>Status <strong style="color:var(--accent);">Approved — Option A</strong></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 PROBLEM -->
+<section class="slide" id="problem">
+  <span class="slide-tag">■ 02 · Problem</span>
+  <span class="slide-num">02 / 08</span>
+  <div class="container">
+    <div class="reveal">
+      <h4>Problem-first inversion</h4>
+      <h2>Đề xuất là MCP.<br><em>Vấn đề là năng lực tạo asset.</em></h2>
+    </div>
+    <div class="two-col reveal delay-1" style="margin-top:60px;">
+      <div>
+        <p class="lead">Repo chỉ tiêu thụ asset có sẵn — 207 pack Kenney CC0. Khi game cần sprite hay model đặc thù không có trong thư viện, pipeline bí hoàn toàn.</p>
+      </div>
+      <div>
+        <p>Ba vấn đề gốc được giải nén từ đề xuất "thêm MCP cho Meshy và Unity":</p>
+        <p style="margin-top:16px;"><strong>Một</strong> — không có đường tạo asset mới theo yêu cầu. <strong>Hai</strong> — 48 pack 3D Kenney đang "chết" vì engine chỉ render Canvas 2D. <strong>Ba</strong> — năng lực generate phải dùng chung cho nhiều người clone repo, không phải setup cá nhân một máy.</p>
+        <p style="margin-top:16px;">Unity không sinh model — nó là editor tiêu thụ model. Đưa Unity vào cùng scope với Meshy là trộn hai bài toán khác nhau.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 EVIDENCE -->
+<section class="slide" id="evidence">
+  <span class="slide-tag">■ 03 · Evidence</span>
+  <span class="slide-num">03 / 08</span>
+  <div class="container">
+    <div class="reveal">
+      <h4>Codebase facts &amp; external verification</h4>
+      <h2>Những gì đã kiểm chứng.</h2>
+    </div>
+    <div class="three-col reveal delay-1" style="margin-top:60px;">
+      <div class="card"><div class="card-mark">01</div><h4>Stack</h4><h3>Canvas 2D thuần</h3><p>TypeScript strict + Vite, zero engine framework. Không <code>.mcp.json</code>, không three.js, không Unity. Games build ra static dist.</p></div>
+      <div class="card"><div class="card-mark">02</div><h4>Pipeline</h4><h3>Multi-source sẵn sàng</h3><p>Asset đổ vào <code>assets/{source}-{slug}/</code>, resolver tách riêng, license theo dõi per-pack với cảnh báo CC-BY attribution. Tiền lệ commit binary: 2 pack R1.</p></div>
+      <div class="card"><div class="card-mark">03</div><h4>Dead weight</h4><div class="num-stat">48</div><p style="margin-top:8px;">pack 3D Kenney (GLB/GLTF) nằm trong manifest mà không game nào dùng được — thiếu runtime 3D.</p></div>
+    </div>
+    <div class="two-col reveal delay-2" style="margin-top:48px;">
+      <div class="card"><div class="card-mark">04</div><h4>Meshy — verified</h4><h3>MCP chính thức tồn tại</h3><p><code>@meshy-ai/meshy-mcp-server</code> trên npm. Tools: text-to-3d, image-to-3d, refine, remesh, retexture, rig, animate. Cần <code>MESHY_API_KEY</code>. Free plan → output CC BY 4.0; paid → user sở hữu.</p></div>
+      <div class="card"><div class="card-mark">05</div><h4>Unity — verified</h4><h3>MCP chính thức nhưng machine-local</h3><p>Đi kèm AI Assistant package: Unity 6+, subscription, link Unity Cloud, Editor phải đang chạy. Không thể project-scope cho nhiều user qua repo config.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 OPTIONS -->
+<section class="slide" id="options">
+  <span class="slide-tag">■ 04 · Options</span>
+  <span class="slide-num">04 / 08</span>
+  <div class="container">
+    <div class="reveal">
+      <h4>Ba phương án</h4>
+      <h2>So sánh trade-off.</h2>
+    </div>
+    <div class="reveal delay-1" style="margin-top:60px; overflow-x:auto;">
+      <table>
+        <thead><tr><th>Phương án</th><th>Cách làm</th><th>Ưu</th><th>Nhược</th><th>Kết luận</th></tr></thead>
+        <tbody>
+          <tr class="featured"><td>A — MCP + Skill + Pipeline</td><td><code>.mcp.json</code> dùng server chính thức; skill check vào repo mã hoá ingest + license; Unity chỉ docs.</td><td>Zero MCP code phải maintain; multi-user tự nhiên; skill mã hoá toàn bộ convention.</td><td>Phụ thuộc schema server chính thức; sprite render là bài toán mở.</td><td style="color:var(--accent); font-weight:500;">CHỌN</td></tr>
+          <tr><td>B — Tự viết MCP server</td><td>Wrapper gói Meshy API + ingest thành một tool.</td><td>Một lệnh trọn pipeline.</td><td>Maintenance code MCP; trùng server chính thức; vi phạm YAGNI.</td><td>Loại</td></tr>
+          <tr><td>C — Skill + REST, không MCP</td><td>Script Node gọi Meshy REST trực tiếp.</td><td>Chạy CI/headless, deterministic.</td><td>Mất tương tác conversational; user yêu cầu MCP rõ ràng.</td><td>Fallback sau</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="pull-quote reveal delay-2" style="margin-top:56px;">Thêm MCP tự nó là việc mười phút. Giá trị thật nằm ở pipeline xung quanh nó.</div>
+  </div>
+</section>
+
+<!-- 05 RECOMMENDATION -->
+<section class="slide" id="recommendation">
+  <span class="slide-tag">■ 05 · Recommendation</span>
+  <span class="slide-num">05 / 08</span>
+  <div class="container">
+    <div class="reveal">
+      <h4>Decision</h4>
+      <h2>Phương án A, bốn phase.<br><em>Unity tách khỏi đường generate.</em></h2>
+    </div>
+    <div class="track-box reveal delay-1" style="margin-top:56px;">
+      <h4>Phase 1 — Core (làm ngay)</h4>
+      <p><strong>1.</strong> <code>.mcp.json</code> root repo khai báo server Meshy chính thức qua npx, API key từ env mỗi user. <strong>2.</strong> Mở rộng schema <code>pack.json</code> cho asset generated: <code>generator</code>, <code>provenance</code> (prompt, taskId, plan), license hai nhánh CC-BY-4.0 / proprietary-owned. <strong>3.</strong> Skill <code>.claude/skills/meshy-model-gen/</code>: generate → download GLB → ingest <code>assets/meshy-{slug}/</code> → catalog; luật cứng: pack CC-BY chỉ vào game có attribution surface. <strong>4.</strong> Binary generated commit thẳng git (duy nhất, không tái tải được). <strong>5.</strong> Docs + cập nhật CLAUDE.md.</p>
+    </div>
+    <div class="three-col reveal delay-2" style="margin-top:32px;">
+      <div class="card"><div class="card-mark">P2</div><h4>Phase 2</h4><h3>Sprite-render pipeline</h3><p>GLB → sprite sheet turntable cho engine Canvas 2D hiện tại. Cần spike headless GL trên Windows trước khi cam kết (fallback: Blender CLI).</p></div>
+      <div class="card"><div class="card-mark">P3</div><h4>Phase 3</h4><h3>Template three.js</h3><p><code>templates/threejs-game/</code> + một game 3D tham chiếu, theo đúng extraction-over-speculation. Unlock 48 pack 3D + model Meshy.</p></div>
+      <div class="card dark"><div class="card-mark">P4</div><h4>Phase 4 — Unity</h4><h3>Docs-only, brainstorm riêng</h3><p>Hướng dẫn setup user-level (Unity 6+, subscription, Unity Cloud). Game Unity WebGL phá nguyên tắc vendoring/static-dist — cần thiết kế lại riêng khi kích hoạt.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 RISKS -->
+<section class="slide" id="risks">
+  <span class="slide-tag">■ 06 · Risks</span>
+  <span class="slide-num">06 / 08</span>
+  <div class="container">
+    <div class="reveal">
+      <h4>Assumptions &amp; failure modes</h4>
+      <h2>Những gì có thể gãy.</h2>
+    </div>
+    <div class="reveal delay-1" style="margin-top:60px; overflow-x:auto;">
+      <table>
+        <thead><tr><th>Rủi ro</th><th>Hệ quả</th><th>Mitigation</th></tr></thead>
+        <tbody>
+          <tr><td>License leak</td><td>Game ship asset CC-BY thiếu attribution — vi phạm license.</td><td>Luật cứng trong SKILL.md; cột license trong catalog; check trước khi ship.</td></tr>
+          <tr><td>Server chính thức đổi schema</td><td>Skill mô tả tool lỗi thời.</td><td>Ghi version server vào skill; cập nhật khi bump major.</td></tr>
+          <tr><td>Repo phình vì binary</td><td>Clone chậm dần theo số model commit.</td><td>Chấp nhận ở volume thấp; ngưỡng ~500MB tổng thì chuyển LFS/R2.</td></tr>
+          <tr><td>Headless GL trên Windows</td><td>Phase 2 không render được sprite.</td><td>Spike trước, tách khỏi Phase 1; fallback Blender CLI.</td></tr>
+          <tr><td>Env expansion trong .mcp.json</td><td><code>${MESHY_API_KEY}</code> không được expand.</td><td>Verify khi implement; fallback hướng dẫn set env shell.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- 07 GAP ANALYSIS + HANDOFF -->
+<section class="slide" id="handoff">
+  <span class="slide-tag">■ 07 · Gap analysis &amp; handoff</span>
+  <span class="slide-num">07 / 08</span>
+  <div class="container">
+    <div class="reveal">
+      <h4>Repo có thể bổ sung gì — xếp hạng</h4>
+      <h2>Sau Meshy,<br><em>đây là hàng đợi.</em></h2>
+    </div>
+    <div class="reveal delay-1" style="margin-top:60px; overflow-x:auto;">
+      <table>
+        <thead><tr><th>#</th><th>Bổ sung</th><th>Impact</th><th>Effort</th><th>Ghi chú</th></tr></thead>
+        <tbody>
+          <tr class="featured"><td>1</td><td>Meshy MCP + skill + ingest (plan này)</td><td>Cao</td><td>Thấp</td><td>Mở năng lực asset mới</td></tr>
+          <tr><td>2</td><td>Template three.js + game 3D tham chiếu</td><td>Cao</td><td>Trung</td><td>Unlock 48 pack 3D đang chết</td></tr>
+          <tr><td>3</td><td>Sprite-render GLB → spritesheet</td><td>Trung</td><td>Trung</td><td>Cần spike headless GL</td></tr>
+          <tr><td>4</td><td>Populate <code>rules/</code> (poker, werewolf…)</td><td>Cao</td><td>Thấp</td><td>Đã hứa từ R2, đang trống; thuần markdown</td></tr>
+          <tr><td>5</td><td>Components: leaderboard, pause-menu, touch-joystick</td><td>Trung</td><td>Thấp</td><td>Extract khi game thứ ba cần</td></tr>
+          <tr><td>6</td><td>SFX/music generation</td><td>Trung</td><td>Thấp</td><td>Cùng pattern ingest như Meshy</td></tr>
+          <tr><td>7</td><td>Template thứ hai: puzzle/board-game</td><td>Trung</td><td>Trung</td><td>Khi có game family mới</td></tr>
+          <tr><td>8</td><td>Unity WebGL track</td><td>Cao</td><td>Rất cao</td><td>Phá vendoring/static-dist — brainstorm riêng</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="track-box reveal delay-2" style="margin-top:48px;">
+      <h4>Handoff</h4>
+      <p>Bước tiếp theo: <code>/ck:plan</code> cho Phase 1 (MCP config + skill + convention). Báo cáo markdown: <code>plans/reports/brainstorm-260707-2118-meshy-unity-mcp-model-generation-report.md</code></p>
+    </div>
+  </div>
+</section>
+
+<!-- 08 CLOSING -->
+<section class="slide" id="closing" style="border-bottom:none;">
+  <span class="slide-tag">■ 08 · Closing</span>
+  <span class="slide-num">08 / 08</span>
+  <div class="container" style="display:flex; flex-direction:column; justify-content:center; min-height:70vh;">
+    <div class="reveal">
+      <h2>Cắm server chính thức.<br>Mã hoá luật thành skill.<br><em>Để Unity chờ đúng lượt.</em></h2>
+      <p class="lead" style="margin-top:40px;">Meshy MCP qua <code>.mcp.json</code> project-scoped, pipeline ingest với license hai nhánh, binary commit thẳng, sprite-render và three.js theo phase — Unity là docs và một cuộc brainstorm khác.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
