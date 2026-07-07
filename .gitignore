@@ -8,3 +8,6 @@ Thumbs.db
 # (pack.json metadata stays in git; the 2 packs imported before this policy remain tracked)
 assets/*/*
 !assets/*/pack.json
+
+# Generated packs (meshy-*) are unique — binaries ARE committed (no re-download source)
+!assets/meshy-*/**

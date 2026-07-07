@@ -58,6 +58,41 @@ Every pack dir in `assets/` must contain:
 - `npm run assets:download -- --source <key>` restricts a run to one source.
 - **License is per-pack**, carried in `pack.json` from the resolver. Kenney = CC0 (no attribution). A non-CC0 source (e.g. CC-BY) obliges every game using its assets to render attribution — track this before shipping. Do not mix a CC-BY pack into a game without an attribution surface.
 
+## Generated asset packs
+
+AI-generated packs (Meshy et al.) are first-class packs with extra provenance duties. Folder: `assets/{generator}-{slug}/` (generator = source key, e.g. `meshy-crystal-golem`) — same `{source}-{pack-name}` rule as downloads.
+
+`pack.json` extension (all base fields above still mandatory):
+
+```json
+{
+  "id": "meshy-crystal-golem",
+  "name": "Crystal Golem",
+  "source": "https://www.meshy.ai",
+  "license": "CC-BY-4.0",
+  "attribution": "Generated with Meshy (meshy.ai)",
+  "generator": "meshy",
+  "provenance": {
+    "prompt": "low-poly crystal golem, game-ready",
+    "taskId": "0195...",
+    "plan": "free",
+    "generatedAt": "2026-07-07"
+  },
+  "style": "low-poly-3d",
+  "tags": ["character", "3d", "generated"],
+  "types": ["3d-models"],
+  "importedAt": "2026-07-07"
+}
+```
+
+- **License is exactly two-branch** by the generating user's Meshy plan: `plan: "free"` → `license: "CC-BY-4.0"` + `attribution` MANDATORY; `plan: "paid"` → `license: "proprietary-owned"`, no `attribution`. No third state.
+- CC-BY packs fall under the attribution rule in "Multiple sources" above: every game using one must render attribution.
+- **Provenance is mandatory**: no generated pack without `prompt` + `taskId` + `plan` — the generated-asset equivalent of "no pack without provenance".
+- `style` must be a real value from day one (the generator knows what style it asked for) — never `"uncurated"`.
+- **Git policy differs from downloads**: generated binaries ARE committed (`.gitignore` exception `!assets/meshy-*/**`) — there is no re-download source; Meshy task results expire. Revisit LFS/external storage when `assets/meshy-*` total exceeds ~500MB.
+
+Workflow lives in the `meshy-model-gen` skill (`.claude/skills/meshy-model-gen/`); user-facing how-to in `docs/generated-assets-guide.md`.
+
 ## Extraction procedure (how the library grows)
 
 1. Build the game fully inside `games/{name}/`, separating `src/core/` (generic) from `src/game/` (specific) from day 1.
